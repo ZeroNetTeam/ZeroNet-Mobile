@@ -21,11 +21,12 @@ signing.properties
 *.aar
 app/release/output.json
 
-# Native libraries produced from Zray-Core by the cargo-ndk Gradle task
+# Native libraries produced from native/ by the cargo-ndk Gradle task
 app/src/main/jniLibs/
 
-# Rust (if Zray-Core is checked out here as a submodule)
+# Rust: build output, and the file Zray-Core/tools/link-local.sh writes
 target/
+native/.cargo/
 
 # OS / desktop noise
 .DS_Store

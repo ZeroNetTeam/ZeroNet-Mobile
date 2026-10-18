@@ -36,7 +36,7 @@ import java.net.URL
 object Crowd {
     private const val TAG = "Crowd"
     private const val TTL_MS = 20 * 60 * 1000L
-    private const val REPO = "zeghostwriter/ZeroNet"
+    private const val REPO = "ZeroNetTeam/Zray-Core"
     private val RANKING_URLS = listOf(
         "https://raw.githubusercontent.com/$REPO/crowd-data/rankings.json",
         "https://cdn.jsdelivr.net/gh/$REPO@crowd-data/rankings.json",

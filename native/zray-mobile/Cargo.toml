@@ -34,6 +34,8 @@ futures = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 
 [dev-dependencies]
+# The bundled-geodata test builds the config the app builds and loads it.
+zero-discovery = { workspace = true }
 tokio = { workspace = true, features = ["rt-multi-thread", "macros", "io-util", "net", "time"] }
 # The handover test creates the TUN interface itself, standing in for the
 # platform, so it needs the ioctl the library would otherwise own.

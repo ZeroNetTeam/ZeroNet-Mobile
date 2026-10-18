@@ -33,7 +33,7 @@ object Sources {
         // when it yields enough, never downloads the big ones. Served from
         // jsDelivr, which is often reachable when raw.githubusercontent.com
         // is not.
-        FeedSource("zeronet", "ZeroNet verified", "zeghostwriter/ZeroNet", "https://cdn.jsdelivr.net/gh/zeghostwriter/ZeroNet@crowd-data/verified.txt", 0, "https://cdn.jsdelivr.net/gh/zeghostwriter/ZeroNet@crowd-data/verified.txt.sig"),
+        FeedSource("zeronet", "ZeroNet verified", "ZeroNetTeam/Zray-Core", "https://cdn.jsdelivr.net/gh/ZeroNetTeam/Zray-Core@crowd-data/verified.txt", 0, "https://cdn.jsdelivr.net/gh/ZeroNetTeam/Zray-Core@crowd-data/verified.txt.sig"),
         // Tier 1: fetched on every cold search that tier 0 did not satisfy, so
         // the whole tier is kept near 90 KB gzipped (sizes noted below).
         FeedSource("sinavm", "SVM", "sinavm/SVM", "$RAW/sinavm/SVM/main/lite/subscriptions/xray/base64/mix", 1),

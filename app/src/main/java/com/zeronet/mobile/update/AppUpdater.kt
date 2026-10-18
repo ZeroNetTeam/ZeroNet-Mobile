@@ -313,7 +313,7 @@ class AppUpdater private constructor(private val context: Context) {
 
     companion object {
         private const val TAG = "AppUpdater"
-        const val REPO = "zeghostwriter/ZeroNet"
+        const val REPO = "ZeroNetTeam/ZeroNet-Mobile"
         private const val KEY_LAST_CHECK = "lastCheck"
         private const val KEY_DISMISSED = "dismissedVersion"
         private const val AUTO_CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000L

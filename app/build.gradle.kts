@@ -7,14 +7,9 @@ plugins {
     alias(libs.plugins.roborazzi)
 }
 
-// Where the Zray-Core workspace lives. `local.properties: zray.core.dir=...`
-// overrides it; the default is the parent directory, which is where this
-// repository sits during development.
-val localProps = Properties().apply {
-    val file = rootProject.file("local.properties")
-    if (file.exists()) file.inputStream().use { load(it) }
-}
-val zrayCoreDir: File = file(localProps.getProperty("zray.core.dir") ?: "${rootDir}/..")
+// The Rust half: the zray-mobile library, built on Zray-Core (a git dependency
+// pinned by native/Cargo.lock).
+val nativeDir: File = file("${rootDir}/native")
 val jniOut = layout.projectDirectory.dir("src/main/jniLibs")
 
 // Release signing comes from keystore.properties (never committed). Without
@@ -153,20 +148,25 @@ android {
     }
 }
 
-// Build libzray_mobile.so for every ABI from the Zray-Core workspace. Cargo's
+// Build libzray_mobile.so for every ABI from the native/ workspace. Cargo's
 // own incremental build keeps this cheap when nothing in Rust changed.
 val skipNative = providers.gradleProperty("zray.skipNative").map { it == "true" }.getOrElse(false)
 val buildZrayNative by tasks.registering(Exec::class) {
     group = "zray"
     description = "Builds libzray_mobile.so for arm64-v8a and armeabi-v7a with cargo-ndk."
-    val script = File(zrayCoreDir, "crates/zray-mobile/build-android.sh")
+    val script = File(nativeDir, "zray-mobile/build-android.sh")
+    val linkedToLocalCore = File(nativeDir, ".cargo/config.toml").exists()
     val enabled = script.exists() && !skipNative
     onlyIf { enabled }
-    workingDir = zrayCoreDir
+    workingDir = nativeDir
     commandLine("bash", script.absolutePath, jniOut.asFile.absolutePath)
-    inputs.dir(File(zrayCoreDir, "crates")).withPathSensitivity(PathSensitivity.RELATIVE)
-    inputs.file(File(zrayCoreDir, "Cargo.toml"))
+    inputs.dir(File(nativeDir, "zray-mobile")).withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file(File(nativeDir, "Cargo.toml"))
+    inputs.file(File(nativeDir, "Cargo.lock"))
     outputs.dir(jniOut)
+    // Linked to a local Zray-Core (tools/link-local.sh), the Rust that changes
+    // is outside these inputs; cargo decides whether anything needs building.
+    outputs.upToDateWhen { !linkedToLocalCore }
 }
 tasks.named("preBuild") { dependsOn(buildZrayNative) }
 

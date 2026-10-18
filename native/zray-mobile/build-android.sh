@@ -2,7 +2,7 @@
 # Build libzray_mobile.so (with the JNI surface) for every Android ABI the app
 # ships and copy each into <out_jniLibs_dir>/<abi>/.
 #
-#   crates/zray-mobile/build-android.sh app/src/main/jniLibs
+#   native/zray-mobile/build-android.sh app/src/main/jniLibs
 #
 # Environment:
 #   ANDROID_NDK_HOME  NDK to use (default: newest under $ANDROID_HOME/ndk, then
@@ -19,7 +19,7 @@ if [[ $# -ne 1 ]]; then
 fi
 out="$1"
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-root="$(cd "$here/../.." && pwd)"
+root="$(cd "$here/.." && pwd)"
 abis="${ZRAY_ABIS:-arm64-v8a armeabi-v7a}"
 api="${ZRAY_API:-30}"
 profile="${ZRAY_PROFILE:-release-mobile}"

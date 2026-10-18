@@ -1,8 +1,8 @@
 # ZrayNative — the Kotlin ↔ Rust contract
 
 This is the only boundary between the app and Zray-Core. The Rust side lives
-in `Zray-Core/crates/zray-mobile/src/android.rs` (feature `jni`), with the
-discovery engine in `Zray-Core/crates/zero-discovery`. The Kotlin side is
+in `native/zray-mobile/src/android.rs` (feature `jni`), with the discovery
+engine in the Zray-Core repository, `crates/zero-discovery`. The Kotlin side is
 `app/src/main/java/com/zeronet/mobile/core/ZrayNative.kt`.
 
 ## Rules
@@ -365,7 +365,7 @@ public keys, safe to show; the key-decryption animation settles on it.
 One request of the "My server" page: the app sets up the person's own server
 over SSH and reads how many devices use it. The request is one object whose
 `op` picks the step; the full list, with every field, is in
-`crates/zero-provision/src/job.rs`.
+`crates/zero-provision/src/job.rs` in the Zray-Core repository.
 
 ```json
 {"op":"fingerprint","host":"203.0.113.7","port":22}
@@ -424,10 +424,10 @@ a sentence before any connection is made. `password` is still accepted for
 - **Job failures.** A job that cannot start returns 0 after delivering one
   `error` event. A job that panics internally delivers an `error` event and a
   `done` with `"error":true`.
-- **Build.** `Zray-Core/crates/zray-mobile/build-android.sh <jniLibs dir>`
+- **Build.** `native/zray-mobile/build-android.sh <jniLibs dir>`
   builds arm64-v8a, armeabi-v7a and x86_64 (API 30) with the
   `release-mobile` profile: release with `panic = "unwind"`, which the
-  catch-unwind guards need (the workspace `release` profile aborts on panic).
+  catch-unwind guards need (the `release` profile in `native/Cargo.toml` aborts on panic).
   cargo-ndk 4 takes the API level as `-P 30` (not `-p`, which is cargo's
   `--package`).
 

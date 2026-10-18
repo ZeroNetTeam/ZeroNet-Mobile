@@ -16,7 +16,7 @@
  * library returns ZRAY_ERR_PANIC; it never aborts the host process.
  *
  * This header is maintained by hand and pinned to the Rust entry points by
- * crates/zray-mobile/tests/header_parity.rs, which fails if the two drift.
+ * native/zray-mobile/tests/header_parity.rs, which fails if the two drift.
  */
 
 #ifndef ZRAY_H

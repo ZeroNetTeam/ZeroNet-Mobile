@@ -168,7 +168,7 @@ class ScreensScreenshotTest {
 
     private val release = com.zeronet.mobile.update.ReleaseInfo(
         version = "0.2.0",
-        page = "https://github.com/zeghostwriter/ZeroNet/releases/tag/v0.2.0",
+        page = "https://github.com/ZeroNetTeam/ZeroNet-Mobile/releases/tag/v0.2.0",
         notes = listOf(
             "Server tests: survive Iran's forged DNS and Cloudflare Workers",
             "README: fix right-to-left layout of the Persian section",

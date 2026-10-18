@@ -1,0 +1,77 @@
+[workspace]
+resolver = "2"
+members = ["zray-mobile"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.95"
+license = "GPL-3.0-only"
+repository = "https://github.com/ZeroNetTeam/ZeroNet-Mobile"
+
+# The engine. Pinned by Cargo.lock; `cargo update -p zero-core` moves it, and
+# Zray-Core/tools/link-local.sh builds against a local checkout instead.
+[workspace.dependencies]
+zero-config = { git = "https://github.com/ZeroNetTeam/Zray-Core", version = "0.1.0", branch = "main" }
+zero-core = { git = "https://github.com/ZeroNetTeam/Zray-Core", version = "0.1.0", branch = "main" }
+zero-discovery = { git = "https://github.com/ZeroNetTeam/Zray-Core", version = "0.1.0", branch = "main" }
+zero-provision = { git = "https://github.com/ZeroNetTeam/Zray-Core", version = "0.1.0", branch = "main" }
+zero-router = { git = "https://github.com/ZeroNetTeam/Zray-Core", version = "0.1.0", branch = "main" }
+zero-runtime = { git = "https://github.com/ZeroNetTeam/Zray-Core", version = "0.1.0", branch = "main" }
+zero-tun = { git = "https://github.com/ZeroNetTeam/Zray-Core", version = "0.1.0", branch = "main" }
+
+futures = "0.3"
+libc = "0.2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "net", "io-util", "macros", "time", "sync", "signal"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Optimised for size: on the SOCKS/TLS path the time goes into the crypto
+# (hand-written assembly in ring/aws-lc) and the kernel, and the benchmark in
+# Zray-Core's docs/benchmarks measures the same speed as -O3 within noise, at about a third
+# less file size. The user-space packet stack keeps -O3 below, since TUN mode
+# spends its time there.
+[profile.release]
+codegen-units = 1
+lto = "fat"
+panic = "abort"
+strip = "symbols"
+opt-level = "s"
+
+[profile.release.package.smoltcp]
+opt-level = 3
+[profile.release.package.netstack-smoltcp]
+opt-level = 3
+[profile.release.package.zero-tun]
+opt-level = 3
+
+# Mobile libraries (zray-mobile/build-android.sh). Identical to release
+# except that panics unwind: the library lives inside someone else's process,
+# every JNI/C entry point catches unwinds and returns an error instead, and a
+# panicking tokio task then ends that one session rather than aborting the
+# user's VPN. With `panic = "abort"` those guards are dead code.
+[profile.release-mobile]
+inherits = "release"
+panic = "unwind"
+# Measured on arm64: 16.5 MB -> 13.3 MB (gzipped 7.6 -> 5.7 MB). Crypto hot
+# paths are hand-written assembly in ring/aws-lc and unaffected; the proxy is
+# I/O bound, and download size matters more on Iranian mobile links.
+opt-level = "s"
+
+# The packet stack is -O3 on desktop (see [profile.release]); phones stay at
+# "s" like the rest of the library.
+[profile.release-mobile.package.smoltcp]
+opt-level = "s"
+[profile.release-mobile.package.netstack-smoltcp]
+opt-level = "s"
+[profile.release-mobile.package.zero-tun]
+opt-level = "s"
+
+# Cargo ignores a dependency's own [patch], so it is repeated here. The core
+# needs the vendored rustls (ClientHello shaping) and the netstack fix, both of
+# which live in the Zray-Core repository under vendor/.
+[patch.crates-io]
+rustls = { git = "https://github.com/ZeroNetTeam/Zray-Core", branch = "main" }
+netstack-smoltcp = { git = "https://github.com/ZeroNetTeam/Zray-Core", branch = "main" }

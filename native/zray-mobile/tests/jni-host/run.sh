@@ -2,12 +2,12 @@
 # Host JNI smoke test: builds libzray_mobile.so for this machine with the
 # `jni` feature, compiles the Java stand-ins for the app's classes, and runs
 # them against the library. Proves the exported names and signatures match
-# ZeroNet-Mobile/docs/native-contract.md and that callbacks reach Java.
+# docs/native-contract.md and that callbacks reach Java.
 #
-#   crates/zray-mobile/tests/jni-host/run.sh
+#   native/zray-mobile/tests/jni-host/run.sh
 set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-root="$(cd "$here/../../../.." && pwd)"
+root="$(cd "$here/../../.." && pwd)"
 out="$(mktemp -d)"
 trap 'rm -rf "$out"' EXIT
 
