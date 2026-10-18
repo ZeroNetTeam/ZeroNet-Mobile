@@ -536,7 +536,7 @@ internal fun AppIcon(pkg: String) {
 private data class Licence(val name: String, val licence: String, val asset: String)
 
 private val LICENCES = listOf(
-    Licence("ZeroNet · Zray-Core", "MIT", "MIT.txt"),
+    Licence("ZeroNet · Zray-Core", "GPL-3.0", "GPL-3.0.txt"),
     Licence("shaped-rustls (rustls fork)", "MPL-2.0", "MPL-2.0.txt"),
     Licence("Vazirmatn", "SIL OFL 1.1", "Vazirmatn-OFL.txt"),
     Licence("AndroidX · Jetpack Compose", "Apache-2.0", "Apache-2.0.txt"),
