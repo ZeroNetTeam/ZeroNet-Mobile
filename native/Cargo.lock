@@ -1759,7 +1759,7 @@ dependencies = [
 [[package]]
 name = "netstack-smoltcp"
 version = "0.2.4"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "etherparse",
  "futures",
@@ -2460,7 +2460,7 @@ dependencies = [
 [[package]]
 name = "rustls"
 version = "0.23.40"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "aws-lc-rs",
  "log",
@@ -3647,7 +3647,7 @@ dependencies = [
 [[package]]
 name = "zero-config"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "base64",
  "percent-encoding",
@@ -3665,7 +3665,7 @@ dependencies = [
 [[package]]
 name = "zero-core"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "bytes",
  "libc",
@@ -3678,7 +3678,7 @@ dependencies = [
 [[package]]
 name = "zero-discovery"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "aes-gcm 0.10.3",
  "base64",
@@ -3714,7 +3714,7 @@ dependencies = [
 [[package]]
 name = "zero-dns"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "bytes",
  "h2",
@@ -3741,7 +3741,7 @@ dependencies = [
 [[package]]
 name = "zero-evasion"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "bytes",
  "libc",
@@ -3754,7 +3754,7 @@ dependencies = [
 [[package]]
 name = "zero-masterdns"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "bytes",
  "flate2",
@@ -3771,7 +3771,7 @@ dependencies = [
 [[package]]
 name = "zero-net"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "flate2",
  "futures",
@@ -3792,7 +3792,7 @@ dependencies = [
 [[package]]
 name = "zero-observatory"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "sha2 0.10.9",
  "zero-core",
@@ -3801,7 +3801,7 @@ dependencies = [
 [[package]]
 name = "zero-protocol"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "aes 0.8.4",
  "aes-gcm 0.10.3",
@@ -3833,7 +3833,7 @@ dependencies = [
 [[package]]
 name = "zero-provision"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "base64",
  "hex",
@@ -3857,7 +3857,7 @@ dependencies = [
 [[package]]
 name = "zero-router"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "aho-corasick",
  "ipnet",
@@ -3873,7 +3873,7 @@ dependencies = [
 [[package]]
 name = "zero-runtime"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "aes 0.8.4",
  "aes-gcm 0.10.3",
@@ -3912,7 +3912,7 @@ dependencies = [
 [[package]]
 name = "zero-scanner"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "anyhow",
  "base64",
@@ -3941,7 +3941,7 @@ dependencies = [
 [[package]]
 name = "zero-security"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "aes-gcm 0.10.3",
  "base64",
@@ -3973,7 +3973,7 @@ dependencies = [
 [[package]]
 name = "zero-transport"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "base64",
  "blake2 0.10.6",
@@ -4004,7 +4004,7 @@ dependencies = [
 [[package]]
 name = "zero-tun"
 version = "0.1.0"
-source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#eac897422bb015a7637c992930742790a1a24582"
+source = "git+https://github.com/ZeroNetTeam/Zray-Core?branch=main#385b76621c8a9e254df116a8b234803a19ace3b1"
 dependencies = [
  "futures",
  "libc",
