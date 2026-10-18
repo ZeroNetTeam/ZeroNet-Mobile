@@ -16,7 +16,20 @@ class ZeroApp : Application() {
         super.onCreate()
         // Before the engine builds a config that carries the password.
         LocalProxyAuth.init(this)
+        dropSharingLeftovers()
         if (isVpnProcess()) Engine.init(this)
+    }
+
+    /**
+     * Nothing about a connect is shared any more. Earlier versions kept a
+     * ranking cache, a remembered network name, a daily random value and a
+     * queue of unsent mode totals on the phone; remove them, so no old
+     * identifier outlives the feature. Safe to run on every start.
+     */
+    private fun dropSharingLeftovers() {
+        deleteSharedPreferences("crowd")
+        deleteSharedPreferences("mode-stats")
+        java.io.File(cacheDir, "crowd").deleteRecursively()
     }
 
     private fun isVpnProcess(): Boolean {

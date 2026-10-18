@@ -194,13 +194,6 @@ class SettingsTest {
     }
 
     @Test
-    fun `crowd picks are marked as verified by others`() {
-        val base = Server("k", "vless://x", "n", "vless", "tcp", "reality", "h", 443, "DE", "feed:crowd")
-        assertEquals(true, base.crowdVerified)
-        assertEquals(false, base.copy(source = "feed:discovered").crowdVerified)
-    }
-
-    @Test
     fun `trusted networks match by identity, not label`() {
         val s = Settings(trustedNetworks = listOf("0011223344556677|Home"))
         assertEquals(true, s.trusts("0011223344556677"))

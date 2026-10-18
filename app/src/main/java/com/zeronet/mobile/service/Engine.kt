@@ -195,10 +195,6 @@ object Engine {
     private const val CHOSEN_DOWN_AFTER = 2
     /** Test timeout for the user's own configs; see [testServers]. */
     private const val OWN_TIMEOUT_MS = 10_000
-    /** Servers other users reported working on this network, tested before searching. */
-    private const val CROWD_PICKS = 12
-    /** How long a connect waits for the crowd rankings when it has none on disk. */
-    private const val CROWD_FETCH_MS = 3_000
     /** Not Cloudflare: Worker-served configs (BPB and the like) cannot reach Cloudflare addresses. */
     private const val PROBE_URL = "http://www.gstatic.com/generate_204"
     /** How often the connected client quietly looks for more servers (see [maybeBackgroundFind]). */
@@ -331,12 +327,6 @@ object Engine {
      * user's real location. An explicit country choice is honoured regardless.
      */
     @Volatile private var homeCountry: String = ""
-    /** Test results for public servers during this connect, for [reportCrowd]. */
-    private val crowdResults = LinkedHashMap<String, Crowd.Result>()
-    /** Clean Cloudflare addresses others found on this network, used after the user's own scan results. */
-    @Volatile private var crowdCleanIps: List<String> = emptyList()
-    /** Others on this network got through better fragmented: start that way. */
-    @Volatile private var crowdFragmentFirst = false
     private var since = 0L
 
     private data class Alive(val server: Server, val delayMs: Int)
@@ -457,7 +447,6 @@ object Engine {
     }
 
     fun disconnect() {
-        noteSessionEnd()
         connectJob?.cancel()
         monitorJob?.cancel()
         scope.launch {
@@ -646,9 +635,6 @@ object Engine {
         pool.clear()
         tunWatch.reset()
         rung = null
-        replacements = 0
-        connectStartedAt = System.currentTimeMillis()
-        crowdResults.clear()
         chosenFailures = 0
         slowUntil.clear()
         stallWatch.reset()
@@ -698,12 +684,9 @@ object Engine {
                         val tried = tryKnownFirst(network)
                         if (pool.size < stopDiscoveryAt(settings.profile)) discover(network, excludeKeys = tried)
                     }
-                    // How long a connect took, or that it did not come up: the plainest measure of a mode.
-                    noteMode("connect", running, (System.currentTimeMillis() - connectStartedAt).toInt())
-                    if (!running) { reportCrowd(network); fail(FailReason.NoWorkingServer, ""); return }
+                    if (!running) { fail(FailReason.NoWorkingServer, ""); return }
                 }
             }
-            reportCrowd(network)
             lastBackgroundFindAt = System.currentTimeMillis()
             monitorJob = scope.launch { monitor(network) }
             if (settings.profile == ConnectionProfile.Gaming) scope.launch { tuneForGaming() }
@@ -808,25 +791,19 @@ object Engine {
 
     /**
      * Before searching: test, all at once, what worked on this network
-     * before and what worked for other people on it (the crowd rankings),
-     * and bring the tunnel up on the first that answers. Usually one of
-     * them does, and the feeds need not be fetched at all. Returns the keys
+     * before, and bring the tunnel up on the first that answers. Usually one
+     * of them does, and the feeds need not be fetched at all. Returns the keys
      * tested, which the search then skips.
      */
     private suspend fun tryKnownFirst(network: String): Set<String> {
-        val crowdName = Crowd.networkName(app, network)
-        val rankings = withContext(Dispatchers.IO) { Crowd.rankings(app, null, CROWD_FETCH_MS) }
-        val picks = rankings?.let { Crowd.picks(it, crowdName, CROWD_PICKS) }.orEmpty()
-        crowdCleanIps = rankings?.let { Crowd.cleanIps(it, crowdName) }.orEmpty().map { "${it.ip}:443" }
-        crowdFragmentFirst = rankings?.let { Crowd.fragmentFirst(it, crowdName) } ?: false
         val history = withContext(Dispatchers.IO) { store.historyLinks(network, 12) }
-        val links = (history + picks.map { it.link }).distinct()
+        val links = history.distinct()
         if (links.isEmpty()) return emptySet()
 
         val items = JSONObject(ZrayNative.parseLinks(links.joinToString("\n"))).optJSONArray("items") ?: JSONArray()
         // A server that failed its test recently is not asked again.
         val forgotten = withContext(Dispatchers.IO) { store.forgottenKeys() }
-        val parsed = List(items.length()) { Server.fromLinkInfo(items.getJSONObject(it), Server.SOURCE_FEED_PREFIX + "crowd") }
+        val parsed = List(items.length()) { Server.fromLinkInfo(items.getJSONObject(it), Server.SOURCE_FEED_PREFIX + "discovered") }
             .filter { it.key !in forgotten }
         // A server already stored keeps its record: its source says whether it is the user's own.
         val stored = withContext(Dispatchers.IO) { store.byKeys(parsed.map { it.key }) }.associateBy { it.key }
@@ -834,13 +811,12 @@ object Engine {
             .filter { suits(it, settings.profile) && !it.excluded }
         if (candidates.isEmpty()) return parsed.map { it.key }.toSet()
         val byKey = candidates.associateBy { it.key }
-        EngineLog.i("trying ${candidates.size} known servers first: ${history.size} from this network's history, ${picks.size} from other users on $crowdName")
+        EngineLog.i("trying ${candidates.size} known servers first, from this network's history")
 
         val tested = HashMap<String, Int>()
         testServers(candidates, timeoutMs = 4000, concurrency = candidates.size) { key, delay, error ->
             val server = byKey[key] ?: return@testServers
             tested[key] = delay
-            noteCrowd(server, delay)
             withContext(Dispatchers.IO) {
                 if (delay >= 0 && key !in stored) store.upsert(listOf(server.copy(delayMs = delay)))
                 store.recordResult(key, delay, network, error)
@@ -860,81 +836,14 @@ object Engine {
         return parsed.map { it.key }.toSet()
     }
 
-    /** Remember a public server's test result for the crowd report. Never the user's own configs. */
-    private fun noteCrowd(server: Server, delay: Int) {
-        if (server.isUser) return
-        crowdResults[server.key] = Crowd.Result(server.key, delay >= 0, delay.coerceAtLeast(0))
-    }
-
-    /**
-     * Share this connect's results for public servers, anonymously, when the
-     * user allows it. Successes first, as the relay takes a limited number.
-     */
-    private fun reportCrowd(network: String) {
-        val results = crowdResults.values.sortedBy { !it.ok }
-        crowdResults.clear()
-        if (!settings.shareResults) return
-        // How the modes did, kept from earlier sessions until there is a tunnel to send through.
-        val modes = ModeStats.pending(app)
-        if (results.isEmpty() && modes.length() == 0) return
-        val tunnel = tunnelProxy()
-        scope.launch(Dispatchers.IO) {
-            val sent = Crowd.report(app, network, results, emptyList(), tunnel, modes = modes.takeIf { it.length() > 0 })
-            if (sent && modes.length() > 0) ModeStats.sent(app, modes.length())
-        }
-    }
-
-    /** Remember how the mode in use did, for the anonymous report, when the user allows it. */
-    private fun noteMode(metric: String, ok: Boolean, ms: Int? = null) {
-        if (!settings.shareResults) return
-        ModeStats.record(app, ModeStats.Fact(ModeStats.id(settings.profile, metric), ok, ms))
-    }
-
-    /** The server changes made since this connection came up; a steady one made none. */
-    @Volatile private var replacements = 0
-
-    /** When the running connect began. */
-    @Volatile private var connectStartedAt = 0L
-
-    /** A session ended: how it went, if it lasted long enough to say. */
-    private fun noteSessionEnd() {
-        if (!running || since == 0L) return
-        val lasted = System.currentTimeMillis() - since
-        ModeStats.stableSession(lasted, replacements)?.let { noteMode("stable", it) }
-        usablePool().firstOrNull()?.delayMs?.takeIf { it >= 0 }?.let { noteMode("ping", true, it) }
-    }
-
-    /** The last method measurement reported, with its network, so each one is
-     *  sent once rather than every second. */
-    private var reportedMethods: String? = null
-
-    /**
-     * Share what the core measured about built-in techniques (CDN handling,
-     * which anti-sanction resolver relays) when the user allows it: once per
-     * new measurement, filed under the network it was measured on. The core
-     * measures a few seconds after connecting, so this runs from the stats
-     * loop rather than with the connect's server results.
-     */
-    private fun reportMethods(methods: org.json.JSONArray, network: String) {
-        val key = "$network|$methods"
-        if (!settings.shareResults || key == reportedMethods) return
-        reportedMethods = key
-        val tunnel = tunnelProxy()
-        scope.launch(Dispatchers.IO) { Crowd.report(app, network, emptyList(), emptyList(), tunnel, methods) }
-    }
-
-    /** The local HTTP proxy into the tunnel, while it is up. */
-    private fun tunnelProxy(): java.net.Proxy? =
-        if (running) java.net.Proxy(java.net.Proxy.Type.HTTP, java.net.InetSocketAddress("127.0.0.1", settings.httpPort)) else null
-
     /**
      * BPB-style fronting: the public servers that worked here before, re-aimed
      * at a bounded sample of Cloudflare edge IPs, so one whose written address
      * or port got blocked is still reached through an edge that is not.
      *
-     * The user's own configs are never fronted. A fronted variant is a new
-     * link, found and reported like any public find, so fronting a personal
-     * worker would put its name into the crowd report.
+     * The user's own configs are never fronted: a fronted variant is a new
+     * link, stored like any public find, so fronting a personal worker would
+     * put its name among the public servers.
      */
     private fun frontedVariants(history: List<String>, userServers: List<Server>, max: Int = FRONT_VARIANTS): List<String> {
         val own = userServers.mapTo(HashSet()) { it.link }
@@ -1025,7 +934,6 @@ object Engine {
                         store.recordResult(server.key, delay, network)
                     }
                     serversChanged.tryEmit(Unit)
-                    noteCrowd(server, delay)
                     // Remembered either way; used only if it suits the profile.
                     if (!suits(server, settings.profile)) return@collect
                     // Feeds list one server under many links; balance across servers, not links.
@@ -1220,7 +1128,6 @@ object Engine {
             .put("allow_insecure", s.allowInsecure)
             // Fragmenting the ClientHello costs round trips; Fast and Gaming skip it.
             .put("evasion", if (!s.profile.classic) "off" else when (rung?.evasion ?: s.evasion) { EvasionLevel.Off -> "off"; EvasionLevel.Auto -> "auto"; EvasionLevel.Strong -> "strong" })
-            .put("fragment_first", crowdFragmentFirst)
             // The decoy server name: on every connection, or never as a variant.
             // Left to the core under Auto.
             .put("sni_spoof", s.sniDecoy == DecoyMode.Always)
@@ -1232,8 +1139,8 @@ object Engine {
             .put("xmux", s.xhttpReuse.name.lowercase())
             .put("fragment_packets", s.fragmentPackets.trim().ifEmpty { "1-1" })
             .put("dns", JSONObject().put("remote", s.remoteDns.name.lowercase()).put("custom", s.customDns.trim()).put("local", s.localDns.name.lowercase()).put("custom_local", s.customLocalDns.trim()).put("anti_sanction", s.antiSanctionDns.name.lowercase()).put("custom_anti_sanction", s.customAntiSanction.trim()).put("fakedns", s.fakeDns))
-            // The user's own scan first, then what others found on this network.
-            .put("clean_ips", JSONArray((scan.value.results.take(10).map { "${it.ip}:${it.port}" } + crowdCleanIps).distinct().take(20)))
+            // The user's own scan results.
+            .put("clean_ips", JSONArray(scan.value.results.take(10).map { "${it.ip}:${it.port}" }.distinct().take(20)))
             .put("log_level", if (s.logs) "info" else "warning")
             .put("warp_order", s.warpOrder.wire)
             // The user's routing profile, ahead of the built-in rules.
@@ -1303,7 +1210,6 @@ object Engine {
                 downHistory.addLast(downRate); upHistory.addLast(upRate)
                 o.optJSONObject("race")?.let { race.value = Ipc.raceFromJson(it) }
                 val next = TrafficStats(upRate, downRate, up, down, downHistory.toList(), upHistory.toList(), o.optString("cdn"))
-                o.optJSONArray("methods")?.takeIf { it.length() > 0 }?.let { reportMethods(it, NetworkIdentity.current(app) ?: network) }
                 stats.value = next
                 if (interactive && tick % 2 == 0L) host?.onStats(next)
                 if (upRate + downRate > 0) lastTrafficAt = System.currentTimeMillis()
@@ -1451,7 +1357,6 @@ object Engine {
         if (!running || pool.size < 2) return@withLock
         if (settings.profile == ConnectionProfile.Gaming && !force) return@withLock
         if (target is ConnectTarget.Specific) return@withLock
-        replacements++
         val now = System.currentTimeMillis()
         val primary = pool.first()
         slowUntil[primary.server.key] = now + SLOW_COOLDOWN_MS
@@ -1605,10 +1510,8 @@ object Engine {
 
     /**
      * Every so often, while connected and the user's traffic is quiet, test a
-     * fresh batch of public servers and — when the user shares results —
-     * report the working ones. The finds go into the pool as standby backups
-     * for the health check, and the reports are what keep the crowd's picture
-     * of this network current for everyone else.
+     * fresh batch of public servers. The finds go into the pool as standby
+     * backups for the health check.
      *
      * Bounded like the connect-time background search (a couple of servers,
      * 20 s once the tunnel is up), so the cost is one conditional feed
@@ -1634,16 +1537,14 @@ object Engine {
         replacementJob?.isActive == true || refreshJob?.isActive == true || testJob?.isActive == true
 
     /**
-     * Run one replacement search and report its results, one at a time. Used
-     * after a switch (the next switch needs somewhere to go) and by the
-     * periodic quiet search; both feed the same crowd report.
+     * Run one replacement search, one at a time. Used after a switch (the next
+     * switch needs somewhere to go) and by the periodic quiet search.
      */
     private fun launchReplacementSearch(network: String, excludeKeys: Set<String>) {
         if (replacementJob?.isActive == true) return
         replacementJob = scope.launch {
             try {
                 findReplacements(network, excludeKeys)
-                reportCrowd(network)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Throwable) {
@@ -2355,7 +2256,6 @@ object Engine {
     fun startScan(count: Int) {
         if (scanJob?.isActive == true) return
         scanJob = scope.launch {
-            val network = NetworkIdentity.current(app)
             scan.value = ScanState(running = true)
             val request = JSONObject().put("preset", "cloudflare").put("ports", JSONArray(listOf(443, 2053, 8443)))
                 .put("host", "www.speedtest.net").put("count", count).put("concurrency", 128).put("timeout_ms", 1500)
@@ -2382,11 +2282,6 @@ object Engine {
             } finally {
                 results.sortBy { it.rttMs }
                 scan.value = scan.value.copy(running = false, results = results.take(100))
-                if (settings.shareResults && network != null && results.isNotEmpty()) {
-                    val clean = results.distinctBy { it.ip }.take(Crowd.MAX_CLEAN).map { Crowd.CleanIp(it.ip, it.rttMs) }
-                    val tunnel = tunnelProxy()
-                    scope.launch(Dispatchers.IO) { Crowd.report(app, network, emptyList(), clean, tunnel) }
-                }
             }
         }
     }

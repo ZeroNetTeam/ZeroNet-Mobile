@@ -278,7 +278,7 @@ private val APPEARANCE_KEYS = intArrayOf(
     R.string.settings_appearance, R.string.settings_palette, R.string.settings_theme_mode, R.string.settings_amoled,
     R.string.settings_dynamic, R.string.settings_language, R.string.settings_motion, R.string.kw_appearance,
 )
-private val PRIVACY_KEYS = intArrayOf(R.string.settings_privacy, R.string.settings_logs, R.string.settings_share_results, R.string.settings_clear_history, R.string.kw_privacy)
+private val PRIVACY_KEYS = intArrayOf(R.string.settings_privacy, R.string.settings_logs, R.string.settings_clear_history, R.string.kw_privacy)
 private val DIAGNOSTICS_KEYS = intArrayOf(
     R.string.settings_diagnostics, R.string.settings_diag_test, R.string.settings_diag_logs, R.string.logs_title, R.string.kw_diagnostics,
 )
@@ -1139,14 +1139,6 @@ private fun PrivacyCard(state: SettingsUiState, q: SettingsQuery, actions: Setti
     SettingsCard(ZeroIcons.Lock, stringResource(R.string.settings_privacy)) {
         if (f.show(R.string.settings_logs)) {
             ToggleRow(stringResource(R.string.settings_logs), s.logs, { v -> actions.onChange { it.copy(logs = v) } }, subtitle = stringResource(R.string.settings_logs_hint))
-        }
-        if (f.show(R.string.settings_share_results)) {
-            ToggleRow(
-                stringResource(R.string.settings_share_results),
-                s.shareResults,
-                { v -> actions.onChange { it.copy(shareResults = v) } },
-                subtitle = stringResource(R.string.settings_share_results_hint),
-            )
         }
         if (f.show(R.string.settings_clear_history)) {
             NavRow(

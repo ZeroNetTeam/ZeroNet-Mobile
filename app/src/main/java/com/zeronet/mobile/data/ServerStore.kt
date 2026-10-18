@@ -261,7 +261,7 @@ class ServerStore private constructor(context: Context) :
 
     /**
      * Delete discovered servers that failed a test, and remember them for
-     * [FORGET_MS] so no search, history or crowd pick brings them back to be
+     * [FORGET_MS] so no search or history brings them back to be
      * tested again. Configs the person brought in (their own, subscriptions),
      * favourites and servers they ruled out by hand are never touched. A
      * server that answers a later test, or that the person imports, is

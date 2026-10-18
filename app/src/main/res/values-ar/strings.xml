@@ -497,8 +497,6 @@
     <string name="settings_update_downloading">جارٍ التنزيل… %1$s</string>
     <string name="settings_update_ready">الإصدار %1$s جاهز للتثبيت</string>
     <string name="settings_update_failed">تعذّر التحقق: %1$s</string>
-    <string name="settings_share_results">ساعِد الآخرين على الاتصال</string>
-    <string name="settings_share_results_hint">يشارك بشكل مجهول أي الخوادم العامة وعناوين IP النظيفة عملت على شبكتك، ومدى جودة كل وضع اتصال (سرعة الاتصال ومدى ثباته)، ليتصل الآخرون أسرع ويتحسن التطبيق. لا عناوين ولا أسماء، ولا تُرسل إعداداتك الخاصة أبدًا.</string>
     <string name="settings_kill_switch_app">حظر البيانات بدون خادم</string>
     <string name="settings_kill_switch_app_hint">أثناء بحث ZeroNet أو إعادة تشغيله أو عدم عثوره على شيء، لا تحصل التطبيقات على إنترنت بدلاً من الخروج دون حماية. يواصل ZeroNet المحاولة حتى يعمل أحد الخوادم.</string>
     <string name="stage_blocked">لا يوجد خادم يعمل بعد. البيانات محظورة (مفتاح الإيقاف) بينما يواصل ZeroNet المحاولة…</string>
@@ -518,13 +516,11 @@
     <string name="trusted_unknown_network">هذه الشبكة</string>
     <string name="kind_split">مسار منفصل</string>
     <string name="kind_quic">QUIC</string>
-    <string name="kind_crowd">يعمل لدى الآخرين</string>
     <string name="kind_hint_split">XHTTP بمسارَي رفع وتنزيل منفصلين: أصعب نوع تتعرّف عليه أنظمة الترشيح.</string>
     <string name="kind_hint_direct">REALITY: يبدو وكأنه زيارة لموقع حقيقي غير مُرشَّح.</string>
     <string name="kind_hint_cdn">خلف شبكة CDN مثل Cloudflare: حظره يعني حظر جزء كبير من الويب.</string>
     <string name="kind_hint_quic">Hysteria2 أو TUIC عبر UDP: سريع عندما يمر UDP، وعديم الفائدة عندما لا يمر.</string>
     <string name="kind_hint_other">إعداد عادي بدون تمويه: يعمل فقط حيث لم يُرشَّح بعد.</string>
-    <string name="kind_hint_crowd">أبلغ مستخدمو ZeroNet آخرون أن هذا الخادم يعمل على شبكاتهم.</string>
     <string name="settings_diagnostics">التشخيص</string>
     <string name="settings_diag_test">اختبار اتصالي</string>
     <string name="settings_diag_test_hint">اكتشف ما تحظره شبكتك وأي أنواع الخوادم يمر عبرها</string>

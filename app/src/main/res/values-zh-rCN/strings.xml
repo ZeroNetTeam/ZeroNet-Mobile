@@ -467,8 +467,6 @@
     <string name="settings_update_downloading">正在下载… %1$s</string>
     <string name="settings_update_ready">版本 %1$s 已可安装</string>
     <string name="settings_update_failed">检查失败：%1$s</string>
-    <string name="settings_share_results">帮助他人连接</string>
-    <string name="settings_share_results_hint">匿名分享你的网络上哪些公共服务器和干净 IP 可用，以及每种连接模式表现如何（连接多快、多稳定），让其他人连得更快，也让应用变得更好。不含地址和名称，你自己的配置绝不会发送。</string>
     <string name="settings_kill_switch_app">无服务器时阻断流量</string>
     <string name="settings_kill_switch_app_hint">当 ZeroNet 正在搜索、重启或未找到服务器时，应用将无法联网，而不是在无保护状态下直接出网。ZeroNet 会持续重试，直到某个服务器可用。</string>
     <string name="stage_blocked">暂无可用服务器。ZeroNet 持续尝试期间，流量已被阻断（终止开关）……</string>
@@ -488,13 +486,11 @@
     <string name="trusted_unknown_network">此网络</string>
     <string name="kind_split">分离路径</string>
     <string name="kind_quic">QUIC</string>
-    <string name="kind_crowd">对他人有效</string>
     <string name="kind_hint_split">上传与下载路径分离的 XHTTP：最难被过滤系统识别的类型。</string>
     <string name="kind_hint_direct">REALITY：看起来像是在访问一个真实、未被过滤的网站。</string>
     <string name="kind_hint_cdn">位于 CDN（如 Cloudflare）之后：封锁它将会封锁大部分网络。</string>
     <string name="kind_hint_quic">基于 UDP 的 Hysteria2 或 TUIC：UDP 畅通时很快，被封时则无法使用。</string>
     <string name="kind_hint_other">无伪装的普通配置：仅在尚未被过滤的网络中可用。</string>
-    <string name="kind_hint_crowd">其他 ZeroNet 用户报告此服务器在他们的网络上可用。</string>
     <string name="settings_diagnostics">诊断</string>
     <string name="settings_diag_test">测试我的连接</string>
     <string name="settings_diag_test_hint">了解你的网络封锁了什么，以及哪些类型的服务器可以通过</string>

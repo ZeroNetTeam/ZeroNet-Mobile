@@ -383,7 +383,6 @@ fun ServerRow(server: Server, active: Boolean, actions: ServersActions, modifier
     val detailsLabel = stringResource(R.string.action_details)
     val connectLabel = stringResource(R.string.action_connect)
     val activeLabel = stringResource(R.string.state_active)
-    val crowdLabel = stringResource(R.string.kind_crowd)
     val skippedLabel = stringResource(R.string.badge_skipped)
     Row(
         modifier
@@ -403,7 +402,7 @@ fun ServerRow(server: Server, active: Boolean, actions: ServersActions, modifier
                 onClick = { actions.onConnect(ConnectTarget.Specific(server.key)) },
             )
             .semantics {
-                contentDescription = "$title, $country, $kind${if (server.crowdVerified) ", $crowdLabel" else ""}${if (server.excluded) ", $skippedLabel" else ""}, $delay"
+                contentDescription = "$title, $country, $kind${if (server.excluded) ", $skippedLabel" else ""}, $delay"
                 if (active) stateDescription = activeLabel
                 customActions = listOf(
                     CustomAccessibilityAction(favLabel) { actions.onFavorite(server, !server.favorite); true },
@@ -420,10 +419,6 @@ fun ServerRow(server: Server, active: Boolean, actions: ServersActions, modifier
             Spacer(Modifier.height(2.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Badge(kind, kindColor(server.kind))
-                if (server.crowdVerified) {
-                    Spacer(Modifier.width(6.dp))
-                    Badge(stringResource(R.string.kind_crowd), c.ok)
-                }
                 if (server.excluded) {
                     Spacer(Modifier.width(6.dp))
                     Badge(stringResource(R.string.badge_skipped), c.muted)

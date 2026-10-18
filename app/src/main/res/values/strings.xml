@@ -486,7 +486,7 @@
     <string name="kw_share">share lan wifi hotspot tether socks http proxy port qr password</string>
     <string name="kw_evasion">censorship filtering fragment dpi sni dns doh quic ads adblock tracker</string>
     <string name="kw_appearance">theme colour color dark light amoled black language persian english farsi animation motion</string>
-    <string name="kw_privacy">logs history delete clear data privacy share anonymous crowd others help</string>
+    <string name="kw_privacy">logs history delete clear data privacy</string>
     <string name="kw_about">version licence license source code open source engine zray update upgrade new</string>
 
     <!-- Onboarding -->
@@ -533,8 +533,6 @@
     <string name="settings_update_downloading">Downloading… %1$s</string>
     <string name="settings_update_ready">Version %1$s is ready to install</string>
     <string name="settings_update_failed">Couldn\'t check: %1$s</string>
-    <string name="settings_share_results">Help others connect</string>
-    <string name="settings_share_results_hint">Anonymously share which public servers and clean IPs worked on your network, and how well each connection mode did (how fast it connected, how steady it stayed), so others connect faster and the app improves. No addresses, no names, and your own configs are never sent.</string>
     <string name="settings_kill_switch_app">Block traffic without a server</string>
     <string name="settings_kill_switch_app_hint">While ZeroNet searches, restarts or finds nothing, apps get no internet instead of going out unprotected. ZeroNet keeps retrying until a server works.</string>
     <string name="stage_blocked">No working server yet. Traffic is blocked (kill switch) while ZeroNet keeps trying…</string>
@@ -554,13 +552,11 @@
     <string name="trusted_unknown_network">This network</string>
     <string name="kind_split">Split path</string>
     <string name="kind_quic">QUIC</string>
-    <string name="kind_crowd">Works for others</string>
     <string name="kind_hint_split">XHTTP with separate upload and download paths: the hardest kind for filters to recognise.</string>
     <string name="kind_hint_direct">REALITY: looks like a visit to a real, unfiltered website.</string>
     <string name="kind_hint_cdn">Behind a CDN such as Cloudflare: blocking it would block much of the web.</string>
     <string name="kind_hint_quic">Hysteria2 or TUIC over UDP: fast when UDP gets through, useless when it does not.</string>
     <string name="kind_hint_other">A plain config without disguise: works only where it is not filtered yet.</string>
-    <string name="kind_hint_crowd">Other ZeroNet users reported this server working on their networks.</string>
     <string name="settings_diagnostics">Diagnostics</string>
     <string name="settings_diag_test">Test my connection</string>
     <string name="settings_diag_test_hint">Find out what your network blocks and which kinds of server get through</string>

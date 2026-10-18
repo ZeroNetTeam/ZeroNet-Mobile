@@ -485,8 +485,6 @@
     <string name="settings_update_downloading">Загрузка… %1$s</string>
     <string name="settings_update_ready">Версия %1$s готова к установке</string>
     <string name="settings_update_failed">Не удалось проверить: %1$s</string>
-    <string name="settings_share_results">Помогите другим подключиться</string>
-    <string name="settings_share_results_hint">Анонимно делитесь тем, какие публичные серверы и чистые IP сработали в вашей сети и насколько хорошо показал себя каждый режим подключения (как быстро подключился, насколько стабилен), чтобы другие подключались быстрее, а приложение становилось лучше. Никаких адресов и имён, ваши собственные конфиги не отправляются.</string>
     <string name="settings_kill_switch_app">Блокировать трафик без сервера</string>
     <string name="settings_kill_switch_app_hint">Пока ZeroNet ищет, перезапускается или ничего не находит, приложения остаются без интернета, а не выходят в сеть без защиты. ZeroNet продолжает попытки, пока сервер не заработает.</string>
     <string name="stage_blocked">Рабочего сервера пока нет. Трафик заблокирован (kill switch), пока ZeroNet продолжает попытки…</string>
@@ -506,13 +504,11 @@
     <string name="trusted_unknown_network">Эта сеть</string>
     <string name="kind_split">Раздельный путь</string>
     <string name="kind_quic">QUIC</string>
-    <string name="kind_crowd">Работает у других</string>
     <string name="kind_hint_split">XHTTP с раздельными путями загрузки и выгрузки: самый трудный для распознавания фильтрами тип.</string>
     <string name="kind_hint_direct">REALITY: выглядит как посещение реального, нефильтруемого сайта.</string>
     <string name="kind_hint_cdn">За CDN, например Cloudflare: его блокировка заблокировала бы значительную часть интернета.</string>
     <string name="kind_hint_quic">Hysteria2 или TUIC поверх UDP: быстро, когда UDP проходит, и бесполезно, когда нет.</string>
     <string name="kind_hint_other">Обычная конфигурация без маскировки: работает только там, где ещё не фильтруется.</string>
-    <string name="kind_hint_crowd">Другие пользователи ZeroNet сообщили, что этот сервер работает в их сетях.</string>
     <string name="settings_diagnostics">Диагностика</string>
     <string name="settings_diag_test">Проверить моё соединение</string>
     <string name="settings_diag_test_hint">Узнайте, что блокирует ваша сеть и какие типы серверов проходят</string>

@@ -53,9 +53,6 @@ data class Server(
             else -> ServerKind.Other
         }
 
-    /** Found working by other ZeroNet users (the crowd rankings), not just listed in a feed. */
-    val crowdVerified: Boolean get() = source == SOURCE_FEED_PREFIX + "crowd"
-
     companion object {
         const val SOURCE_USER = "user"
         const val SOURCE_SUB_PREFIX = "sub:"

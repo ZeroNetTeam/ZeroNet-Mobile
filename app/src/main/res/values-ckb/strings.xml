@@ -475,8 +475,6 @@
     <string name="settings_update_downloading">لە داگرتندایە… %1$s</string>
     <string name="settings_update_ready">وەشانی %1$s ئامادەیە بۆ دامەزراندن</string>
     <string name="settings_update_failed">نەتوانرا بپشکنرێت: %1$s</string>
-    <string name="settings_share_results">یارمەتیدانی ئەوانیتر بۆ پەیوەستبوون</string>
-    <string name="settings_share_results_hint">بە شێوەیەکی نەناسراو ڕادەگەیەنێت کام سێرڤەری گشتی و IPی پاک لەسەر تۆڕەکەت کاریان کرد و هەر دۆخێکی پەیوەندی چەند باش بوو (چەند خێرا پەیوەست بوو، چەند جێگیر مایەوە)، تا کەسانی تر خێراتر پەیوەست ببن و بەرنامەکە باشتر بێت. هیچ ناونیشان و ناوێک و کۆنفیگە تایبەتییەکانت هەرگیز نانێردرێن.</string>
     <string name="settings_kill_switch_app">بلۆککردنی ترافیک بەبێ سێرڤەر</string>
     <string name="settings_kill_switch_app_hint">لە کاتی گەڕان، دووبارە دەستپێکردنەوە، یان نەدۆزینەوەی ZeroNet، ئەپەکان ئینتەرنێتیان نابێت لەبری ئەوەی بەبێ پارێزگاری بچنە دەرەوە. ZeroNet بەردەوام هەوڵ دەداتەوە تا سێرڤەرێک کار دەکات.</string>
     <string name="stage_blocked">هێشتا سێرڤەری کارکەر نییە. ترافیک بلۆک کراوە (کیڵ سویچ) لە کاتێکدا ZeroNet بەردەوامە بە هەوڵدان…</string>
@@ -496,13 +494,11 @@
     <string name="trusted_unknown_network">ئەم تۆڕە</string>
     <string name="kind_split">ڕێڕەوی جیاکراوە</string>
     <string name="kind_quic">QUIC</string>
-    <string name="kind_crowd">بۆ ئەوانی تر کار دەکات</string>
     <string name="kind_hint_split">XHTTP بە ڕێڕەوی جیاوازی بارکردن و داگرتن: سەختترین جۆر بۆ ناسینەوە لەلایەن فیلتەرەکانەوە.</string>
     <string name="kind_hint_direct">REALITY: وەک سەردانی ماڵپەڕێکی ڕاستەقینەی فیلتەرنەکراو دیارە.</string>
     <string name="kind_hint_cdn">لە پشت CDN وەک Cloudflare: بلۆککردنی زۆربەی ئینتەرنێت بلۆک دەکات.</string>
     <string name="kind_hint_quic">Hysteria2 یان TUIC لەسەر UDP: خێرایە کاتێک UDP تێدەپەڕێت، بێسوودە کاتێک نایپەڕێت.</string>
     <string name="kind_hint_other">کۆنفیگێکی ساکار بەبێ شاردنەوە: تەنها لەوێ کار دەکات کە هێشتا فیلتەر نەکراوە.</string>
-    <string name="kind_hint_crowd">بەکارهێنەرانی تری ZeroNet ڕایانگەیاند کە ئەم سێرڤەرە لەسەر تۆڕەکانیان کار دەکات.</string>
     <string name="settings_diagnostics">دەستنیشانکردنی کێشە</string>
     <string name="settings_diag_test">تاقیکردنەوەی پەیوەندییەکەم</string>
     <string name="settings_diag_test_hint">بزانە تۆڕەکەت چی بلۆک دەکات و چ جۆرێک لە سێرڤەر تێدەپەڕێت</string>

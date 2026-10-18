@@ -151,10 +151,6 @@ private fun ColumnScope.DetailContent(
                     Text(countryLabel(context, s.country, locale), style = MaterialTheme.typography.bodyMedium, color = c.muted)
                     Spacer(Modifier.width(8.dp))
                     Badge(kindLabel(context, s.kind), com.zeronet.mobile.ui.servers.kindColor(s.kind))
-                    if (s.crowdVerified) {
-                        Spacer(Modifier.width(6.dp))
-                        Badge(stringResource(R.string.kind_crowd), c.ok)
-                    }
                 }
             }
             IconAction(
@@ -182,8 +178,7 @@ private fun ColumnScope.DetailContent(
                 Spacer(Modifier.height(16.dp))
                 // Why this kind of server is (or is not) hard to filter.
                 Text(
-                    com.zeronet.mobile.ui.model.kindHint(context, s.kind) +
-                        if (s.crowdVerified) " " + stringResource(R.string.kind_hint_crowd) else "",
+                    com.zeronet.mobile.ui.model.kindHint(context, s.kind),
                     style = MaterialTheme.typography.bodySmall,
                     color = c.muted,
                     modifier = Modifier.padding(bottom = 8.dp),

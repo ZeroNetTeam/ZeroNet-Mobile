@@ -473,8 +473,6 @@
     <string name="settings_update_downloading">İndiriliyor… %1$s</string>
     <string name="settings_update_ready">%1$s sürümü kurulmaya hazır</string>
     <string name="settings_update_failed">Denetlenemedi: %1$s</string>
-    <string name="settings_share_results">Başkalarının bağlanmasına yardım et</string>
-    <string name="settings_share_results_hint">Ağınızda hangi genel sunucuların ve temiz IP\'lerin çalıştığını ve her bağlantı modunun ne kadar iyi olduğunu (ne kadar hızlı bağlandı, ne kadar kararlı kaldı) anonim olarak paylaşır; böylece başkaları daha hızlı bağlanır ve uygulama gelişir. Adres ya da ad gönderilmez, kendi yapılandırmalarınız asla gönderilmez.</string>
     <string name="settings_kill_switch_app">Sunucu olmadan trafiği engelle</string>
     <string name="settings_kill_switch_app_hint">ZeroNet arama yaparken, yeniden başlarken veya hiçbir şey bulamazken, uygulamalar korumasız çıkmak yerine internete erişemez. ZeroNet, bir sunucu çalışana kadar denemeye devam eder.</string>
     <string name="stage_blocked">Henüz çalışan bir sunucu yok. ZeroNet denemeye devam ederken trafik engelleniyor (öldürme anahtarı)…</string>
@@ -494,13 +492,11 @@
     <string name="trusted_unknown_network">Bu ağ</string>
     <string name="kind_split">Bölünmüş yol</string>
     <string name="kind_quic">QUIC</string>
-    <string name="kind_crowd">Başkaları için çalışıyor</string>
     <string name="kind_hint_split">Ayrı yükleme ve indirme yollarına sahip XHTTP: filtrelerin tanıması en zor tür.</string>
     <string name="kind_hint_direct">REALITY: gerçek, filtrelenmemiş bir web sitesine yapılan ziyaret gibi görünür.</string>
     <string name="kind_hint_cdn">Cloudflare gibi bir CDN arkasında: engellenmesi web\'in büyük bölümünü engellerdi.</string>
     <string name="kind_hint_quic">UDP üzerinden Hysteria2 veya TUIC: UDP geçtiğinde hızlı, geçmediğinde işe yaramaz.</string>
     <string name="kind_hint_other">Gizlenmesiz düz bir yapılandırma: yalnızca henüz filtrelenmemiş yerlerde çalışır.</string>
-    <string name="kind_hint_crowd">Diğer ZeroNet kullanıcıları bu sunucunun kendi ağlarında çalıştığını bildirdi.</string>
     <string name="settings_diagnostics">Tanılama</string>
     <string name="settings_diag_test">Bağlantımı test et</string>
     <string name="settings_diag_test_hint">Ağınızın neyi engellediğini ve hangi tür sunucuların geçtiğini öğrenin</string>

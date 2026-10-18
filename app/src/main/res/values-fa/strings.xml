@@ -518,8 +518,6 @@
     <string name="settings_update_downloading">در حال دانلود… %1$s</string>
     <string name="settings_update_ready">نسخه‌ی %1$s آماده‌ی نصب است</string>
     <string name="settings_update_failed">بررسی نشد: %1$s</string>
-    <string name="settings_share_results">کمک به اتصال دیگران</string>
-    <string name="settings_share_results_hint">به‌صورت ناشناس اعلام می‌کند کدام سرورهای عمومی و آی‌پی‌های تمیز روی شبکه‌ی شما کار کردند و هر حالت اتصال چقدر خوب عمل کرد (چقدر سریع وصل شد، چقدر پایدار ماند)، تا دیگران سریع‌تر وصل شوند و برنامه بهتر شود. هیچ آدرس یا نامی و هیچ‌کدام از کانفیگ‌های شخصی شما ارسال نمی‌شود.</string>
     <string name="settings_kill_switch_app">مسدود کردن ترافیک بدون سرور</string>
     <string name="settings_kill_switch_app_hint">وقتی زیرونت در حال جستجو، راه‌اندازی دوباره یا ناموفق است، برنامه‌ها به‌جای خروج بدون محافظت، اینترنت ندارند. زیرونت تا پیدا شدن سرور سالم دوباره تلاش می‌کند.</string>
     <string name="stage_blocked">هنوز سرور سالمی پیدا نشده. ترافیک مسدود است (کلید قطع اضطراری) و زیرونت همچنان تلاش می‌کند…</string>
@@ -539,13 +537,11 @@
     <string name="trusted_unknown_network">این شبکه</string>
     <string name="kind_split">مسیر دوتایی</string>
     <string name="kind_quic">QUIC</string>
-    <string name="kind_crowd">برای دیگران کار می‌کند</string>
     <string name="kind_hint_split">XHTTP با مسیرهای جدا برای ارسال و دریافت: سخت‌ترین نوع برای تشخیص فیلترینگ.</string>
     <string name="kind_hint_direct">REALITY: شبیه بازدید از یک سایت واقعی و فیلترنشده است.</string>
     <string name="kind_hint_cdn">پشت یک CDN مثل کلودفلر: بستن آن بخش بزرگی از وب را می‌بندد.</string>
     <string name="kind_hint_quic">Hysteria2 یا TUIC روی UDP: وقتی UDP باز است سریع است، وگرنه کار نمی‌کند.</string>
     <string name="kind_hint_other">کانفیگ ساده و بدون پوشش: فقط جایی کار می‌کند که هنوز فیلتر نشده.</string>
-    <string name="kind_hint_crowd">کاربران دیگر زیرونت گزارش داده‌اند این سرور روی شبکه‌شان کار می‌کند.</string>
     <string name="settings_diagnostics">عیب‌یابی</string>
     <string name="settings_diag_test">آزمایش اتصال من</string>
     <string name="settings_diag_test_hint">ببینید شبکه‌تان چه چیزی را می‌بندد و کدام نوع سرورها رد می‌شوند</string>

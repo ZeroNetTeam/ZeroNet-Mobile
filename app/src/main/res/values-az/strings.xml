@@ -474,8 +474,6 @@
     <string name="settings_update_downloading">Endirilir… %1$s</string>
     <string name="settings_update_ready">%1$s versiyası quraşdırmağa hazırdır</string>
     <string name="settings_update_failed">Yoxlanıla bilmədi: %1$s</string>
-    <string name="settings_share_results">Başqalarına bağlanmağa kömək et</string>
-    <string name="settings_share_results_hint">Şəbəkənizdə hansı ictimai serverlərin və təmiz IP-lərin işlədiyini və hər qoşulma rejiminin nə qədər yaxşı olduğunu (nə qədər tez qoşuldu, nə qədər sabit qaldı) anonim paylaşır ki, başqaları daha tez qoşulsun və tətbiq yaxşılaşsın. Ünvan və ad göndərilmir, öz konfiqurasiyalarınız heç vaxt göndərilmir.</string>
     <string name="settings_kill_switch_app">Serversiz trafiki blokla</string>
     <string name="settings_kill_switch_app_hint">ZeroNet axtarış edərkən, yenidən başladarkən və ya heç nə tapmayanda, tətbiqlər qorunmasız çıxmaqdansa internetsiz qalır. ZeroNet server işləyənə qədər cəhdləri təkrarlayır.</string>
     <string name="stage_blocked">Hələ işləyən server yoxdur. ZeroNet cəhd etməyə davam edərkən trafik bloklanıb (kill switch)…</string>
@@ -495,13 +493,11 @@
     <string name="trusted_unknown_network">Bu şəbəkə</string>
     <string name="kind_split">Bölünmüş yol</string>
     <string name="kind_quic">QUIC</string>
-    <string name="kind_crowd">Başqaları üçün işləyir</string>
     <string name="kind_hint_split">Ayrı yükləmə və endirmə yolları olan XHTTP: filtrlərin tanıması ən çətin olan növ.</string>
     <string name="kind_hint_direct">REALITY: real, filtrlənməmiş sayta baş çəkmə kimi görünür.</string>
     <string name="kind_hint_cdn">Cloudflare kimi CDN arxasında: onu bloklamaq internetin böyük hissəsini bloklayardı.</string>
     <string name="kind_hint_quic">UDP üzərindən Hysteria2 və ya TUIC: UDP keçəndə sürətli, keçməyəndə faydasız.</string>
     <string name="kind_hint_other">Gizlətmə olmadan sadə konfiqurasiya: yalnız hələ filtrlənməyən yerlərdə işləyir.</string>
-    <string name="kind_hint_crowd">Digər ZeroNet istifadəçiləri bu serverin öz şəbəkələrində işlədiyini bildirdilər.</string>
     <string name="settings_diagnostics">Diaqnostika</string>
     <string name="settings_diag_test">Bağlantımı yoxla</string>
     <string name="settings_diag_test_hint">Şəbəkənizin nəyi blokladığını və hansı növ serverlərin keçdiyini öyrənin</string>
